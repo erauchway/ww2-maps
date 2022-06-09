@@ -1,6 +1,6 @@
 ---
-title: "pacmap41"
-author: "eric"
+title: "Pacific Map, summer 1941"
+author: "Eric Rauchway"
 date: "6/9/2022"
 output: html_document
 ---
