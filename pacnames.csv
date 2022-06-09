@@ -1,0 +1,47 @@
+NAME,mylabels,status,nx,ny,maj
+Alaska,Aleutians<br>(Alaska),Neutral,-1750000,-3000000,3
+American Samoa,American Samoa,Neutral,0,-150000,3
+Australia,AUSTRALIA,Allies,0,0,4
+British Borneo,British<br>Borneo,Allies,-200000,200000,3
+Burma,Burma,Allies,0,30000,3
+Canada West Coast,CANADA,Allies,0,-200000,4
+Caroline Islands,Carolines,Axis,0,0,3
+China,CHINA<br>(free),Allies,500000,-250000,4
+Dutch East Indies,Dutch East Indies,Allies,500000,-500000,3
+Fiji,Fiji,Allies,0,200000,3
+Formosa,Formosa,Axis-occupied,0,0,3
+French Indochina,French<br>Indochina,Axis-occupied,350000,-450000,3
+French Polynesia,French Polynesia,Allies,0,0,3
+Gilbert Islands,Gilberts,Allies,0,0,3
+Guadalcanal,Guadalcanal,Allies,-450000,0,2
+Guam,Guam,Neutral,0,-55000,2
+Hawaii,Hawaii,Neutral,150000,200000,3
+India,India,Allies,0,0,3
+Japan,JAPAN,Axis,0,-200000,4
+Korea,Korea,Axis-occupied,0,-125000,3
+Malaya,Malaya,Allies,200000,-30000,3
+Manchukuo,Manchukuo,Axis-occupied,50000,-35000,3
+Marianas,Marianas,Axis,0,100000,3
+Marshall Islands,Marshalls,Axis,0,0,3
+Mexico West Coast,MEXICO,Neutral,-300000,-100000,4
+Midway Islands,Midway,Neutral,0,150000,2
+Mongolia,Mongolia,Neutral,0,0,3
+New Caledonia,New Caledonia,Allies,0,-175000,3
+New Hebrides,New Hebrides,Allies,0,175000,3
+New Zealand,NEW ZEALAND,Allies,0,300000,4
+Occupied China,CHINA<br>(occupied),Axis-occupied,75000,-200000,4
+Philippines,Philippines,Allies,750000,0,3
+Pitcairn Islands,Pitcairns,Allies,0,0,3
+Saipan,Saipan,Axis,250000,30000,2
+Samoa,Samoa,Allies,0,150000,3
+Solomon Islands,Solomons,Allies,15000,200000,3
+Territories of Papua and New Guinea,Papua and<br>New Guinea,Allies,200000,100000,3
+Thailand,Thailand,Neutral,115000,0,3
+Tinian,Tinian,Axis,-250000,-30000,2
+Tonga,,Allies,0,0,2
+Tuvalu,,Allies,0,0,2
+U.S. West Coast,USA,Neutral,-500000,-400000,4
+USSR,USSR,Neutral,200000,-2250000,4
+Okinawa,Okinawa,Axis,0,0,2
+Sakhalin,,Axis,0,0,2
+Iwo Jima,Iwo Jima,Axis,0,0,2
