@@ -1,7 +1,7 @@
 ---
 title: "Pacific Map, summer 1941"
 author: "Eric Rauchway"
-date: "6/9/2022"
+date: "6/10/2022"
 output: html_document
 ---
 
@@ -12,6 +12,9 @@ library(tidyverse)
 library(sf)
 library(cowplot)
 library(ggtext)
+
+# Set theme preferences. I like Futura for the mid-century look. Also adding a light blue panel background.
+
 theme_set(theme_void() +
            theme(legend.position = "bottom",
                   text = element_text(family = "Futura Medium"),
@@ -21,43 +24,57 @@ theme_set(theme_void() +
                   legend.text = element_text(size = rel(0.6)),
                   plot.caption = element_markdown(hjust = 0, size = rel(0.5)),
                  panel.background = element_rect(fill = "#f7fdff", color = "#f7fdff")))
+
+# Coordinate reference system for this map will be Pacific Disaster Center Mercator projection, as described here: https://epsg.io/3832
+
 target_crs = "EPSG:3832"
+
+# Read basic map data to simple features object
 
 pacmap <- st_read("pacmap41.geojson")
 
-status <- read_csv("pacnames.csv")
+# Read supplementary variables and merge
 
+status <- read_csv("pacnames.csv")
 pacmap <- left_join(pacmap, status)
+
+# Add ordered factor for status of territory
 
 pacmap <- pacmap %>%
   mutate(pacmap, status_ord = factor(status, levels = c("Axis",
                                                          "Axis-occupied",
                                                          "Neutral",
                                                          "Allies",
-                                                        "USA",
                                                          ordered = TRUE)))
+# Ensure all data now in sf form
+
 pacmap <- st_as_sf(pacmap)
 
-mypal = c("#70a494", "#b4c8a8", "#f6edbd", "#ca562c", "#A16928") 
+# Establish diverging color palette suitable to number of twrritories
+
+mypal = c("#70a494", "#b4c8a8", "#f6edbd", "#ca562c") 
+
+# Generate centroids as reference points for labels; file pacnames.csv already contains x and y adjustments for labels relative to these centroids
 
 pacmap <- cbind(pacmap, st_coordinates(st_centroid(pacmap)))
+
+# Establish major and minor labels based on variable "maj" from pacnames.csv
 
 majlab <- pacmap[which(pacmap$maj == 4),]
 minlab <- pacmap[which(pacmap$maj == 3),]
 miclab <- pacmap[which(pacmap$maj == 2),]
 
-disp_win_wgs84 <- st_sfc(st_point(c(93, -50)), st_point(c(250, 58)), crs = 4326)
-disp_win_trans <- st_transform(disp_win_wgs84, crs = target_crs)
-disp_win_coord <- st_coordinates(disp_win_trans)
-
+# Plot map, setting small black borders and fill based on ordered factor variable
 p <- ggplot(pacmap, color = alpha(c("black"),0.5)) + geom_sf(data = pacmap, mapping = aes(fill = status_ord), alpha = .6, size = 0.2) 
+# Add colors based on divergent color scheme above
 p + scale_fill_manual(values = mypal)  +
-  scale_color_manual(values = mypal)  +
-  guides(fill = guide_legend(ncol = 5))  +
-  coord_sf(xlim = disp_win_coord[,'X'], ylim = disp_win_coord[, 'Y'], datum = target_crs, expand = FALSE)  +
+  # Add major place labels
   geom_richtext(data = majlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 5, fill = NA, label.color = NA, nudge_x = majlab$nx, nudge_y = majlab$ny, na.rm = TRUE) +
+  # Add minor place labels
   geom_richtext(data = minlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 4, fill = NA, label.color = NA, nudge_x = minlab$nx, nudge_y = minlab$ny, na.rm = TRUE) +
+  # Add smallest place labels
   geom_richtext(data = miclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 3, fill = NA, label.color = NA, nudge_x = miclab$nx, nudge_y = miclab$ny, na.rm = TRUE) +
+  # Label Coral Sea
   geom_text(x = 80000,
             y = -1900000,
             color = "lightskyblue2",
@@ -65,6 +82,7 @@ p + scale_fill_manual(values = mypal)  +
             size = 5,
             hjust = 0,
             label = "Coral Sea") +
+  # Label Pacific Ocean
   geom_richtext(x = 1000000,
             y = 2000000,
             color = "lightskyblue2",
@@ -74,9 +92,10 @@ p + scale_fill_manual(values = mypal)  +
             fill = NA,
             label.color = NA,
             label = "Pacific Ocean") +
+  # Place legend inside plot and set appearance of title and text
   theme(legend.position = c(0.827, 0.06),
         legend.text = element_text(family = "Futura Medium", color = "black", size = 8),
         legend.title = element_text(family = "Futura Medium", color = "black", size = 9)) +
-  
+#Set title of legend  
   labs(fill = "Status of territory as of summer 1941")
 ```
