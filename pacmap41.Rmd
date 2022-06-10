@@ -74,16 +74,9 @@ p + scale_fill_manual(values = mypal)  +
             fill = NA,
             label.color = NA,
             label = "Pacific Ocean") +
-  geom_text( x = 6000000,
-             y = -5000000,
-             hjust = 0,
-             color = "black",
-             label = "Status of territory as of summer 1941",
-             family = "Futura Medium Italic",
-             size = 4) +
   theme(legend.position = c(0.827, 0.06),
         legend.text = element_text(family = "Futura Medium", color = "black", size = 8),
         legend.title = element_text(family = "Futura Medium", color = "black", size = 9)) +
   
-  labs(fill = "")
+  labs(fill = "Status of territory as of summer 1941")
 ```
