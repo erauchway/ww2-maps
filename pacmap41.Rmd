@@ -52,7 +52,7 @@ pacmap <- pacmap %>%
 
 pacmap <- st_as_sf(pacmap)
 
-# Establish diverging color palette suitable to number of twrritories
+# Establish diverging color palette suitable to number of territories
 
 mypal = c("#70a494", "#b4c8a8", "#f6edbd", "#ca562c") 
 
