@@ -1,2 +1,3 @@
-The beginning of a set of maps for teaching the second world war. Map data draws principally from [Natural Earth datasets](https://www.naturalearthdata.com/), at various resolutions. I've drawn for reference on other sources, including [André Ourednik's historical basemaps](https://github.com/aourednik/historical-basemaps) repository; for occupied China, I looked to Greg Huff, [_World War II and Southeast Asia_](https://www.cambridge.org/core/books/world-war-ii-and-southeast-asia/5EE13B3424DE481C5AD6E1B82D0058D2). For colors I drew mainly from [CARTOcolors](https://carto.com/carto-colors/). When all else has failed I've looked up latitudes and longitudes in Wikipedia.
+The beginning of a set of maps for teaching the second world war. 
+
 Right now the only map here is the Pacific area map for summer 1941. 
