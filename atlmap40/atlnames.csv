@@ -22,7 +22,7 @@ Dominican Republic,,Neutral,0,0,2
 Ecuador,Ecuador,Neutral,20000,0,2
 El Salvador,,Neutral,0,0,2
 Falkland Is.,Falkland Is.,Allies,0,0,2
-French Guiana,French<br>Guiana,Vichy,100000,40000,2
+French Guiana,French<br>Guiana,Vichy,150000,40000,2
 French West Africa,French West Africa,Vichy,-325000,0,3
 French West Indies,,Vichy,0,0,2
 Gold Coast,Gold<br>Coast,Allies,0,0,2
@@ -54,7 +54,7 @@ Rio de Oro,Rio de Oro,Neutral,-200000,0,2
 S. Geo. and the Is.,S. Geo. and the Is.,Allies,0,0,2
 Sierra Leone,Sierra Leone,Allies,-300000,0,2
 Spain,Spain,Neutral,0,20000,3
-Surinam,Surinam,Allies,0,0,2
+Surinam,Surinam,Allies,0,-10000,2
 Trinidad and Tobago,,Allies,0,0,2
 Tunisia,Tunisia,Vichy,0,0,3
 United Kingdom,UK,Allies,0,-120000,4
@@ -63,3 +63,4 @@ United States Virgin Islands,,Neutral,30000,-10000,2
 Uruguay,Uruguay,Neutral,0,0,2
 Venezuela,Venezuela,Neutral,0,0,2
 Vichy France,Vichy,Vichy,-150000,0,3
+Ireland,Ireland,Neutral,0,0,2

@@ -1,7 +1,7 @@
 ---
-title: "Atlamtic Map, Summer 1940"
+title: "Atlantic Map, Summer 1940"
 author: "Eric Rauchway"
-date: '2022-06-18'
+date: '2022-06-21'
 output: html_document
 ---
 
@@ -104,7 +104,7 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
   geom_label(data = basest, mapping = aes(X, Y, label = tag), fill = alpha(c("white"),0.6), inherit.aes = FALSE, family = "Futura Medium", size = 2, label.size = 0.2, label.padding = unit(0.2, "lines"), nudge_x = basest$nx, nudge_y = basest$ny) +
 #Label Atlantic Ocean
     geom_richtext(x = -5250000,
-            y = 3000000,
+            y = 2900000,
             color = "lightskyblue2",
             family = "Futura Medium Italic",
             size = 7,
@@ -123,12 +123,12 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
             label.color = NA,
             label = "Caribbean Sea") +
 # add legend
-  theme(legend.position = c(0.825, 0.108),
+  theme(legend.position = c(0.825, 0.109),
         legend.text = element_text(family = "Futura Medium", color = "black", size = 8),
         legend.title = element_text(family = "Futura Medium", color = "black", size = 8)) +
 #Set title of legend  
   labs(fill = "Status of territory as of summer 1940",
        caption = "Labels show names and locations of U.S. bases acquired from Britain in destroyers-for-bases deal. Map data principally from Natural Earth, selected from various datasets; I used<br>other maps for reference including those of André Ourednik and Michael de Groot, as well as the Rand-McNally map of Africa in 1939 from the David Rumsey Map Collection.<br>Names of bases from _Air Corps News Letter_; locations from Robert J. Cressman, _Official Chronology of the U.S. Navy in World War II._ Divergent color scale from<br>CARTOcolors.",
        title = "Atlantic area, summer 1940")
-
+ggsave("atlmap40.tiff", bg = "white")
 ```
