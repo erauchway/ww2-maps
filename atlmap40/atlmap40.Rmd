@@ -107,7 +107,7 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
             y = 3000000,
             color = "lightskyblue2",
             family = "Futura Medium Italic",
-            size = 9,
+            size = 7,
             hjust = 0,
             fill = NA,
             label.color = NA,
