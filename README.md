@@ -1,7 +1,6 @@
 The beginning of a set of maps for teaching the second world war. 
 
-Right now the only map here is the Pacific area map for summer 1941. With the three `pacmap41` files in the same directory, knitting `pacmap41.Rmd` with RStudio will yield this map.
+Maps for the Atlantic area in 1940 and the Pacific area in 1941 appear in their respective subfolders, with a knittable RMarkdown file for RStudio and geojson data together with a .csv file for additional variables.
 
-With special thanks to Kieran Healy, Sarah Bagby, Steve Cook, and Sam Anthony.
+With special thanks to Kieran Healy, Sarah Bagby, Steve Cook, and Sam Anthony, as well as Jason Heppler for kindly agreeing to demonstrate replicability of code.
 
-![download](https://user-images.githubusercontent.com/86692030/173256568-d78a9c3a-d1ec-4886-9360-cea4a2e628d6.png)
