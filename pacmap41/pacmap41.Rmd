@@ -70,6 +70,8 @@ miclab <- pacmap[which(pacmap$maj == 2),]
 p <- ggplot(pacmap, color = alpha(c("black"),0.5)) + geom_sf(data = pacmap, mapping = aes(fill = status_ord), alpha = .6, size = 0.2) 
 # Add colors based on divergent color scheme above
 p + scale_fill_manual(values = mypal)  +
+  #Full bleed to borders
+  coord_sf(expand = FALSE) +
   # Add major place labels
   geom_richtext(data = majlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 5, fill = NA, label.color = NA, nudge_x = majlab$nx, nudge_y = majlab$ny, na.rm = TRUE) +
   # Add minor place labels

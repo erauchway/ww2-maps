@@ -1,0 +1,134 @@
+---
+title: "Atlamtic Map, Summer 1940"
+author: "Eric Rauchway"
+date: '2022-06-18'
+output: html_document
+---
+
+Map data draws principally from [Natural Earth datasets](https://www.naturalearthdata.com/), at various resolutions. I've drawn for reference on other sources, including [André Ourednik's historical basemaps](https://github.com/aourednik/historical-basemaps) repository and [Michael de Groot's "Building the New Order"](https://web.archive.org/web/20151010143948/https://web.stanford.edu/group/spatialhistory/cgi-bin/site/pub.php?id=51) as well as the Rand-McNally map of Africa in 1939, [from the David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~247218~5515276:Rand-McNally-Popular-map-Africa?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&qvq=w4s:/what%2FAtlas%2BMap%2Fwhere%2FAfrica%2Fwhen%2F1939;q:africa;sort:Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No;lc:RUMSEY~8~1&mi=0&trs=1#); for names of bases, [_Air Corps News Letter_](file:///Users/earauchway/Downloads/AirCorpsNewsLetter19410601.pdf) For colors I drew mainly from [CARTOcolors](https://carto.com/carto-colors/). When all else has failed I've looked up latitudes and longitudes in Wikipedia.
+
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results = "hide")
+
+library(tidyverse)
+library(sf)
+library(cowplot)
+library(ggtext)
+library(ggrepel)
+sf_use_s2(FALSE)
+# Set theme preferences. Futura for the mid-century look. Also adding a light blue panel background.
+
+theme_set(theme_void() +
+           theme(legend.position = "bottom",
+                  text = element_text(family = "Futura Medium"),
+                  plot.title = element_markdown(size = rel(1.0), hjust = 0),
+                  plot.subtitle = element_markdown(size = rel(0.8)),
+                  legend.title = element_text(size = rel(0.5)),
+                  legend.text = element_text(size = rel(0.6)),
+                  plot.caption = element_markdown(hjust = 0, size = rel(0.5)),
+                 panel.background = element_rect(fill = "#f7fdff", color = "#f7fdff")))
+
+minvars <- c("NAME", "geometry")
+
+#Coordinate reference system for this map will be World Robinson projection, https://epsg.io/54030
+target_crs <- "ESRI:54030"
+```
+```{r}
+# Read basic map data to simple features object
+atlmap <- st_read("atlmap40.geojson")
+
+# Read supplementary variables and merge
+status <- read_csv("atlnames.csv")
+atlmap <- left_join(atlmap, status)
+
+#Add ordered factor for status of territory
+atlmap <- atlmap %>% 
+  mutate(atlmap, status_ord = factor(status, levels = c("Axis-occupied",
+                                                        "Vichy",
+                                                         "Neutral",
+                                                        "Allies-occupied",
+                                                         "Allies",
+                                                         ordered = TRUE)))
+
+#Ensure data in sf form
+#atlmap <- st_as_sf(atlmap)
+
+#Establish divergent color palette with correct number of variables
+mypal = c("#70a494","#b4c8a8","#f6edbd","#de8a5a","#ca562c")
+
+#This code for projected data, from here https://www.r-bloggers.com/2019/04/zooming-in-on-maps-with-sf-and-ggplot2/
+atlmap <- st_transform(atlmap, crs = target_crs)
+disp_win_wgs84 <- st_sfc(st_point(c(-85, -13)), st_point(c(5, 70)), crs = 4326)
+disp_win_trans <- st_transform(disp_win_wgs84, crs = target_crs)
+disp_win_coord <- st_coordinates(disp_win_trans)
+
+
+# Generate centroids as reference points for labels; file pacnames.csv already contains x and y adjustments for labels relative to these centroids
+
+atlmap <- cbind(atlmap, st_coordinates(st_centroid(atlmap)))
+
+# Establish major and minor labels based on variable "maj" from pacnames.csv
+
+majlab <- atlmap[which(atlmap$maj == 4),]
+minlab <- atlmap[which(atlmap$maj == 3),]
+miclab <- atlmap[which(atlmap$maj == 2),]
+
+# load bases data in lat / lon
+bases <- read_csv(file = "bases.csv")
+bases <- st_as_sf(bases, coords = c("lon", "lat"), crs = 4326, agr = "identity")
+# project base data and create X,Y coordinates
+basest <- st_transform(bases, crs = target_crs)
+basest <- cbind(basest, st_coordinates(st_centroid(basest)))
+# create base tag with name and country
+basest <- basest %>%
+  mutate(basest, tag = paste(base, country, sep = "\n"))
+
+```
+```{r, fig.height = 7, fig.width = 7, fig.retina = 3}
+# Plot map, setting small black borders and fill based on ordered factor variable
+p <- ggplot(atlmap, color = alpha(c("black"),0.5)) 
+p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) + 
+# Add colors based on divergent color scheme above
+ scale_fill_manual(values = mypal) +
+  #Crop and add full bleed to borders
+ coord_sf(xlim = disp_win_coord[,'X'], ylim = disp_win_coord[,'Y'], datum = target_crs, expand = FALSE) +
+  # Add major place labels
+  geom_richtext(data = majlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 5, fill = NA, label.color = NA, nudge_x = majlab$nx, nudge_y = majlab$ny, na.rm = TRUE) +
+  # Add minor place labels
+  geom_richtext(data = minlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 3, fill = NA, label.color = NA, nudge_x = minlab$nx, nudge_y = minlab$ny, na.rm = TRUE) +
+  # Add smallest place labels
+  geom_richtext(data = miclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 2, fill = NA, label.color = NA, nudge_x = miclab$nx, nudge_y = miclab$ny, na.rm = TRUE) +
+  # add bases labels
+  geom_label(data = basest, mapping = aes(X, Y, label = tag), fill = alpha(c("white"),0.6), inherit.aes = FALSE, family = "Futura Medium", size = 2, label.size = 0.2, label.padding = unit(0.2, "lines"), nudge_x = basest$nx, nudge_y = basest$ny) +
+#Label Atlantic Ocean
+    geom_richtext(x = -5250000,
+            y = 3000000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 9,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "Atlantic Ocean") +
+  #Label Caribbean Sea
+  geom_richtext(x = -7500000,
+            y = 1550000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 3,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "Caribbean Sea") +
+# add legend
+  theme(legend.position = c(0.825, 0.108),
+        legend.text = element_text(family = "Futura Medium", color = "black", size = 8),
+        legend.title = element_text(family = "Futura Medium", color = "black", size = 8)) +
+#Set title of legend  
+  labs(fill = "Status of territory as of summer 1940",
+       caption = "Labels show names and locations of U.S. bases acquired from Britain in destroyers-for-bases deal. Map data principally from Natural Earth, selected from various datasets; I used<br>other maps for reference including those of André Ourednik and Michael de Groot, as well as the Rand-McNally map of Africa in 1939 from the David Rumsey Map Collection.<br>Names of bases from _Air Corps News Letter_; locations from Robert J. Cressman, _Official Chronology of the U.S. Navy in World War II._ Divergent color scale from<br>CARTOcolors.",
+       title = "Atlantic area, summer 1940")
+
+```
