@@ -1,40 +1,40 @@
 NAME,mylabels,status,nx,ny,maj
 Algeria,Algeria,Vichy,-300000,0,3
-Argentina,Argentina,Neutral,0,0,2
+Argentina,Argentina,Neutral,0,0,3
 Bahamas,,Allies,0,0,2
 Belgium,,Axis-occupied,0,0,3
 Bermuda,,Allies,0,0,2
 Bolivia,Bolivia,Neutral,0,0,2
 Brazil,Brazil,Neutral,0,300000,3
-British Gambia,Gambia,Allies,-350000,0,2
+British Gambia,Gambia,Allies,-200000,0,2
 British Guiana,,Allies,0,120000,2
 British Honduras,,Allies,0,0,2
 British Leeward Islands,,Allies,0,0,2
 British Windward Islands,,Allies,0,0,2
-Côte d'Ivoire,Ivory<br>Coast,Vichy,0,0,2
+Côte d'Ivoire,Ivory<br>Coast,Vichy,0,0,3
 Cameroon,Cameroon,Allies,0,0,3
 Canada,CANADA,Allies,150000,-600000,4
 Chile,Chile,Neutral,0,0,2
-Colombia,Colombia,Neutral,0,0,2
+Colombia,Colombia,Neutral,0,0,3
 Costa Rica,,Neutral,0,0,2
-Cuba,,Neutral,0,0,3
+Cuba,Cuba,Neutral,0,0,3
 Dominican Republic,,Neutral,0,0,2
-Ecuador,Ecuador,Neutral,20000,0,2
+Ecuador,Ecuador,Neutral,20000,0,3
 El Salvador,,Neutral,0,0,2
 Falkland Is.,Falkland Is.,Allies,0,0,2
-French Guiana,French<br>Guiana,Vichy,150000,40000,2
+French Guiana,French<br>Guiana,Vichy,0,40000,2
 French West Africa,French West Africa,Vichy,-325000,0,3
 French West Indies,,Vichy,0,0,2
 Gold Coast,Gold<br>Coast,Allies,0,0,2
-Greenland,Greenland,Neutral,-150000,-500000,3
+Greenland,Greenland,Neutral,-300000,-500000,3
 Guatemala,Guatemala,Neutral,0,0,2
-Guinea-Bissau,Guinea-Bissau,Neutral,-400000,-40000,2
+Guinea-Bissau,Guinea-Bissau,Neutral,-200000,-40000,2
 Haiti,,Neutral,0,0,2
 Honduras,,Neutral,0,0,2
 Iceland,Iceland,Allies-occupied,0,0,3
 Italy,,Axis-occupied,0,0,3
 Jamaica,,Allies,0,0,2
-Liberia,Liberia,Neutral,-40000,-40000,2
+Liberia,Liberia,Neutral,-20000,-40000,2
 Libya,,Axis-occupied,0,0,3
 Mexico,,Neutral,0,0,4
 Morocco,Morocco,Vichy,0,0,3
@@ -44,23 +44,23 @@ Newfoundland,,Allies,25000,50000,3
 Nicaragua,,Neutral,0,0,2
 Nigeria,Nigeria,Allies,0,0,3
 Norway,Norway,Axis-occupied,0,0,3
-Occupied France,France,Axis-occupied,-200000,0,3
-Panama,Panama,Neutral,0,20000,2
+Occupied France,France,Axis-occupied,-100000,0,3
+Panama,Panama,Neutral,0,20000,3
 Paraguay,Paraguay,Neutral,0,0,2
-Peru,Peru,Neutral,-85000,0,2
+Peru,Peru,Neutral,-85000,0,3
 Portugal,Portugal,Neutral,-250000,-40000,3
 Puerto Rico,,Neutral,0,20000,2
-Rio de Oro,Rio de Oro,Neutral,-200000,0,2
+Rio de Oro,Rio de Oro,Neutral,-100000,0,3
 S. Geo. and the Is.,S. Geo. and the Is.,Allies,0,0,2
-Sierra Leone,Sierra Leone,Allies,-300000,0,2
+Sierra Leone,Sierra<Br>Leone,Allies,0,0,2
 Spain,Spain,Neutral,0,20000,3
 Surinam,Surinam,Allies,0,-10000,2
 Trinidad and Tobago,,Allies,0,0,2
 Tunisia,Tunisia,Vichy,0,0,3
-United Kingdom,UK,Allies,0,-120000,4
+United Kingdom,UK,Allies,100000,-120000,4
 United States of America,USA,Neutral,1700000,-800000,4
 United States Virgin Islands,,Neutral,30000,-10000,2
 Uruguay,Uruguay,Neutral,0,0,2
-Venezuela,Venezuela,Neutral,0,0,2
-Vichy France,Vichy,Vichy,-150000,0,3
-Ireland,Ireland,Neutral,0,0,2
+Venezuela,Venezuela,Neutral,0,0,3
+Vichy France,Vichy<br>France,Vichy,-100000,0,3
+Ireland,Ireland,Neutral,10000,0,2

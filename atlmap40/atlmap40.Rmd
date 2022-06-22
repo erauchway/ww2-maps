@@ -86,7 +86,7 @@ basest <- basest %>%
   mutate(basest, tag = paste(base, country, sep = "\n"))
 
 ```
-```{r, fig.height = 7, fig.width = 7, fig.retina = 3}
+```{r, fig.height = 14, fig.width = 14, fig.retina = 3}
 # Plot map, setting small black borders and fill based on ordered factor variable
 p <- ggplot(atlmap, color = alpha(c("black"),0.5)) 
 p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) + 
@@ -101,13 +101,13 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
   # Add smallest place labels
   geom_richtext(data = miclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 2, fill = NA, label.color = NA, nudge_x = miclab$nx, nudge_y = miclab$ny, na.rm = TRUE) +
   # add bases labels
-  geom_label(data = basest, mapping = aes(X, Y, label = tag), fill = alpha(c("white"),0.6), inherit.aes = FALSE, family = "Futura Medium", size = 2, label.size = 0.2, label.padding = unit(0.2, "lines"), nudge_x = basest$nx, nudge_y = basest$ny) +
+  geom_label(data = basest, mapping = aes(X, Y, label = tag), fill = alpha(c("white"),0.5), inherit.aes = FALSE, family = "Futura Medium", size = 3, label.size = 0.2, label.padding = unit(0.2, "lines"), nudge_x = basest$nx, nudge_y = basest$ny) +
 #Label Atlantic Ocean
-    geom_richtext(x = -5250000,
+    geom_richtext(x = -4750000,
             y = 2900000,
             color = "lightskyblue2",
             family = "Futura Medium Italic",
-            size = 7,
+            size = 8,
             hjust = 0,
             fill = NA,
             label.color = NA,
@@ -117,7 +117,7 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
             y = 1550000,
             color = "lightskyblue2",
             family = "Futura Medium Italic",
-            size = 3,
+            size = 4,
             hjust = 0,
             fill = NA,
             label.color = NA,
@@ -128,7 +128,7 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
         legend.title = element_text(family = "Futura Medium", color = "black", size = 8)) +
 #Set title of legend  
   labs(fill = "Status of territory as of summer 1940",
-       caption = "Labels show names and locations of U.S. bases acquired from Britain in destroyers-for-bases deal. Map data principally from Natural Earth, selected from various datasets; I used<br>other maps for reference including those of André Ourednik and Michael de Groot, as well as the Rand-McNally map of Africa in 1939 from the David Rumsey Map Collection.<br>Names of bases from _Air Corps News Letter_; locations from Robert J. Cressman, _Official Chronology of the U.S. Navy in World War II._ Divergent color scale from<br>CARTOcolors.",
+       caption = "Labels show names and locations of U.S. bases acquired from Britain in destroyers-for-bases deal. Map data principally from Natural Earth, selected from various datasets; I used other maps for reference including those of André Ourednik and Michael de Groot, as well as the Rand-McNally map of Africa in 1939 from the David Rumsey Map Collection. Names of bases<br>from _Air Corps News Letter_; locations from Robert J. Cressman, _Official Chronology of the U.S. Navy in World War II._ Divergent color scale from CARTOcolors.",
        title = "Atlantic area, summer 1940")
 ggsave("atlmap40.tiff", bg = "white")
 ```
