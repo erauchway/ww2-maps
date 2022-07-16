@@ -1,0 +1,60 @@
+NAME,status,maj,mylabels,nx,ny
+Spain,Neutral,3,Spain,0,0
+Italy,Axis,4,ITALY,0,0
+Switzerland,Neutral,2,Switzerland,0,0
+Luxembourg,Axis-occupied,2,,0,0
+Andorra,Neutral,2,,0,0
+Monaco,Neutral,2,,0,0
+Bulgaria,Neutral,2,Bulgaria,0,0
+Romania,Neutral,3,Romania,0,-8000
+Vichy France,Vichy,3,Vichy France,0,0
+Greece,Allies,3,Greece,-60000,0
+Netherlands,Axis-occupied,2,Netherlands,0,0
+United Kingdom,Allies,4,UK,70000,-15000
+Denmark,Axis-occupied,2,Denmark,0,0
+Sweden,Neutral,2,Sweden,-35000,-50000
+Norway,Axis-occupied,2,Norway,-200000,-600000
+Turkey,Neutral,3,Turkey,-60000,0
+Gibraltar,Allies,2,,0,0
+Portugal,Neutral,2,Portugal,5000,0
+Ireland,Neutral,2,Ireland,3000,0
+Iceland,Allies-occupied,3,Iceland,3000,0
+Malta,Allies,2,,0,0
+Cyprus,Allies,2,,0,0
+San Marino,Neutral,2,,0,0
+Vatican,Neutral,2,,0,0
+Liechtenstein,Neutral,2,,0,0
+Albania,Axis-occupied,2,Albania,0,0
+Finland,Neutral,2,Finland,15000,-70000
+Hungary,Neutral,3,Hungary,-5000,8000
+Yugoslavia,Neutral,3,Yugoslavia,0,0
+Slovakia,Neutral,2,Slovakia,-5000,0
+Protectorate of Bohemia and Moravia,Axis-occupied,2,Bohemia &<br>Moravia,-5000,0
+General Government,Axis-occupied,2,General<br>Government,0,0
+Belgium,Axis-occupied,2,Belgium,0,0
+France,Axis-occupied,3,France,0,5000
+Germany,Axis,4,GERMANY,-3000,0
+Austria,Axis,3,Austria,8000,0
+Eupen-Malmedy,Axis,2,,0,0
+Alsace-Lorraine,Axis,2,,0,0
+Sudetenland,Axis,2,,0,0
+Military Administration in Poland,Axis,2,German Poland,0,0
+Klaipeda,Axis,2,,0,0
+Soviet Union,Axis-nonaggressor,4,USSR,-1500000,-2750000
+Soviet Poland,Axis-nonaggressor,2,Soviet<br>Poland,0,0
+Soviet Finland,Axis-nonaggressor,2,Soviet<br>Finland,40000,-80000
+Lithuania,Axis-nonaggressor,2,Lithuania,0,0
+Latvia,Axis-nonaggressor,2,Latvia,30000,0
+Estonia,Axis-nonaggressor,2,Estonia,0,0
+Bessarabia and Bukovina,Axis-nonaggressor,2,Bessarabia &<br>Bukovina,5000,0
+Morocco,Vichy,3,Morocco,0,0
+Tunisia,Vichy,2,Tunisia,-30000,0
+Algeria,Vichy,3,Algeria,0,300000
+Libya,Axis,3,Libya,-50000,275000
+Egypt,Allies-occupied,3,Egypt,-60000,200000
+Palestine and Transjordan,Allies-occupied,2,,0,0
+Syria,Vichy,2,,0,0
+Saudi Arabia,Allies,3,,0,0
+Greenland,Neutral,3,Greenland,0,0
+Rio de Oro,Neutral,3,,0,0
+Lebanon,Vichy,2,,0,0

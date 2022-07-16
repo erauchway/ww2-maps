@@ -1,0 +1,157 @@
+---
+title: "Europe map, start of 1941"
+author: "Eric Rauchway"
+date: "7/16/2022"
+output: html_document
+---
+
+Map draws from Natural Earth datasets and also from [Michael de Groot's "Building the New Order"](https://web.archive.org/web/20151010143948/https://web.stanford.edu/group/spatialhistory/cgi-bin/site/pub.php?id=51) as well as the Rand-McNally map of Africa in 1939, [from the David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~247218~5515276:Rand-McNally-Popular-map-Africa?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&qvq=w4s:/what%2FAtlas%2BMap%2Fwhere%2FAfrica%2Fwhen%2F1939;q:africa;sort:Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No;lc:RUMSEY~8~1&mi=0&trs=1#). Information on the targets of the Blitz to the end of 1940 from Basil Collier, _The Defence of the United Kingdom._ Color palette adapted from [CARTOcolors](https://carto.com/carto-colors/). Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE, results = "hide", fig.height = 14, fig.width = 14, fig.retina = 3}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results = "hide")
+
+library(tidyverse)
+library(sf)
+library(cowplot)
+library(ggtext)
+library(rmapshaper)
+sf_use_s2(FALSE)
+
+# Set theme preferences. Futura for the mid-century look. Also adding a light blue panel background.
+
+theme_set(theme_void() +
+           theme(legend.position = "bottom",
+                  text = element_text(family = "Futura Medium"),
+                  plot.title = element_markdown(size = rel(2.0), hjust = 0, vjust = -10),
+                  plot.subtitle = element_markdown(size = rel(1.0)),
+                  legend.title = element_text(size = rel(0.8)),
+                  legend.text = element_text(size = rel(0.7)),
+                  plot.caption = element_markdown(hjust = 0, size = rel(0.5)),
+                 panel.background = element_rect(fill = "#f7fdff", color = "#f7fdff")))
+
+
+minvars <- c("NAME", "geometry")
+
+
+#Europe Albers equal area conic projection, https://epsg.io/102013
+target_crs <- "ESRI:102013"
+#Read borders
+euromap <- st_read("euromap.geojson")
+```
+
+```{r}
+#Set crs
+euromap <- st_transform(euromap, crs = target_crs)
+
+#Read status and other variables
+status <- read_csv("noms.csv")
+#Add status to map
+euromap <- left_join(euromap, status)
+#Create ordered factor for status
+euromap <- euromap %>%
+  mutate(euromap, status_ord = factor(status, levels = c("Axis",
+                                                         "Axis-occupied",
+                                                         "Vichy",
+                                                         "Neutral",
+                                                         "Axis-nonaggressor",
+                                                         "Allies",
+                                                         "Allies-occupied",
+                                                         ordered = TRUE)))
+#Create divergent palette
+mypal = c("#008080", "#70a494", "#b4c8a8", "#f6edbd", "#a16928", "#ca562c", "#edbb8a")
+
+# Generate centroids as reference points for labels; file noms.csv already contains x and y adjustments for labels relative to these centroids
+
+euromap <- cbind(euromap, st_coordinates(st_centroid(euromap)))
+
+# Establish major and minor labels based on variable "maj" from nom.csv
+
+majlab <- euromap[which(euromap$maj == 4),]
+minlab <- euromap[which(euromap$maj == 3),]
+miclab <- euromap[which(euromap$maj == 2),]
+
+blitz <- read_csv(file = "blitz.csv")
+blitz <- st_as_sf(blitz, coords = c("lon", "lat"), crs = 4326, agr = "identity")
+blitz <- st_transform(blitz, crs = target_crs)
+
+```
+
+```{r, fig.height = 14, fig.width = 14, fig.retina = 3}
+
+
+#Set coordinates for European region, convert to appropriate crs
+disp_win_wgs84 <- st_sfc(st_point(c(-10, 27)), st_point(c(66, 63)), crs = 4326)
+disp_win_trans <- st_transform(disp_win_wgs84, crs = target_crs)
+disp_win_coord <- st_coordinates(disp_win_trans)
+
+#Plot map, with small black borders and fill colors according to status of territory
+p <- ggplot(data = euromap, color = alpha(c("black"),0.5))
+p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) +
+  #Add Blitz targets
+  geom_sf(data = blitz, fill = "grey10", color = "black", size = 3, pch = 10) +
+  #Crop and full bleed to borders
+  coord_sf(xlim = disp_win_coord[,'X'], ylim = disp_win_coord[, 'Y'], datum = target_crs, expand = FALSE) +
+# Add colors based on divergent color scheme above
+ scale_fill_manual(values = mypal)  +
+   # Add major place labels
+  geom_richtext(data = majlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 7, fill = NA, label.color = NA, nudge_x = majlab$nx, nudge_y = majlab$ny, na.rm = TRUE) +
+  # Add minor place labels
+  geom_richtext(data = minlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 5, fill = NA, label.color = NA, nudge_x = minlab$nx, nudge_y = minlab$ny, na.rm = TRUE) +
+  # Add smallest place labels
+  geom_richtext(data = miclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 3, fill = NA, label.color = NA, nudge_x = miclab$nx, nudge_y = miclab$ny, na.rm = TRUE) +
+  guides(fill = guide_legend(ncol = 7)) +
+  #Label Atlantic Ocean
+    geom_richtext(x = -2000000,
+            y = 3300000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 9,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "Atlantic<br>Ocean") +
+  #Label North Sea
+    geom_richtext(x = -550000,
+            y = 2870000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 5,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "North<br>Sea") +
+  #Label Baltic Sea
+    geom_richtext(x = 420000,
+            y = 2900000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 4,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "Baltic<br>Sea") +
+  #Label Mediterranean Sea
+    geom_richtext(x = 400000,
+            y = 500000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 6,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "Mediterranean Sea") +
+  #Label Black Sea
+    geom_richtext(x = 1760000,
+            y = 1750000,
+            color = "lightskyblue2",
+            family = "Futura Medium Italic",
+            size = 5,
+            hjust = 0,
+            fill = NA,
+            label.color = NA,
+            label = "Black Sea") +
+  labs(title = "European and North African areas, end of 1940",
+       subtitle = "Showing status, including German and Soviet annexations since 1938; points in the UK show major targets of the Blitz",
+       caption = "Map data from Natural Earth and Michael de Groot, \"Building the New Order: 1938--1945,\" Stanford Spatial History Lab (2010); Blitz data from Basil Collier, _The Defence of the United Kingdom_, appendix XXX. Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.",
+       fill = "Status")
+```

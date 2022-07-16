@@ -5,7 +5,7 @@ date: '2022-06-21'
 output: html_document
 ---
 
-Map data draws principally from [Natural Earth datasets](https://www.naturalearthdata.com/), at various resolutions. I've drawn for reference on other sources, including [André Ourednik's historical basemaps](https://github.com/aourednik/historical-basemaps) repository and [Michael de Groot's "Building the New Order"](https://web.archive.org/web/20151010143948/https://web.stanford.edu/group/spatialhistory/cgi-bin/site/pub.php?id=51) as well as the Rand-McNally map of Africa in 1939, [from the David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~247218~5515276:Rand-McNally-Popular-map-Africa?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&qvq=w4s:/what%2FAtlas%2BMap%2Fwhere%2FAfrica%2Fwhen%2F1939;q:africa;sort:Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No;lc:RUMSEY~8~1&mi=0&trs=1#); for names of bases, [_Air Corps News Letter_](file:///Users/earauchway/Downloads/AirCorpsNewsLetter19410601.pdf) For colors I drew mainly from [CARTOcolors](https://carto.com/carto-colors/). When all else has failed I've looked up latitudes and longitudes in Wikipedia.
+Map data draws principally from [Natural Earth datasets](https://www.naturalearthdata.com/), at various resolutions. I've drawn for reference on other sources, including [André Ourednik's historical basemaps](https://github.com/aourednik/historical-basemaps) repository and [Michael de Groot's "Building the New Order"](https://web.archive.org/web/20151010143948/https://web.stanford.edu/group/spatialhistory/cgi-bin/site/pub.php?id=51) as well as the Rand-McNally map of Africa in 1939, [from the David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~247218~5515276:Rand-McNally-Popular-map-Africa?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&qvq=w4s:/what%2FAtlas%2BMap%2Fwhere%2FAfrica%2Fwhen%2F1939;q:africa;sort:Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No;lc:RUMSEY~8~1&mi=0&trs=1#); for names of bases, [_Air Corps News Letter_](file:///Users/earauchway/Downloads/AirCorpsNewsLetter19410601.pdf) For colors I drew mainly from [CARTOcolors](https://carto.com/carto-colors/). When all else has failed I've looked up latitudes and longitudes in Wikipedia. Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.
 
 
 ```{r setup, include = FALSE}
@@ -23,8 +23,8 @@ sf_use_s2(FALSE)
 theme_set(theme_void() +
            theme(legend.position = "bottom",
                   text = element_text(family = "Futura Medium"),
-                  plot.title = element_markdown(size = rel(1.0), hjust = 0),
-                  plot.subtitle = element_markdown(size = rel(0.8)),
+                  plot.title = element_markdown(size = rel(2.0), hjust = 0),
+                  plot.subtitle = element_markdown(size = rel(1.0)),
                   legend.title = element_text(size = rel(0.5)),
                   legend.text = element_text(size = rel(0.6)),
                   plot.caption = element_markdown(hjust = 0, size = rel(0.5)),
@@ -65,11 +65,11 @@ disp_win_trans <- st_transform(disp_win_wgs84, crs = target_crs)
 disp_win_coord <- st_coordinates(disp_win_trans)
 
 
-# Generate centroids as reference points for labels; file pacnames.csv already contains x and y adjustments for labels relative to these centroids
+# Generate centroids as reference points for labels; file atlnames.csv already contains x and y adjustments for labels relative to these centroids
 
 atlmap <- cbind(atlmap, st_coordinates(st_centroid(atlmap)))
 
-# Establish major and minor labels based on variable "maj" from pacnames.csv
+# Establish major and minor labels based on variable "maj" from atlnames.csv
 
 majlab <- atlmap[which(atlmap$maj == 4),]
 minlab <- atlmap[which(atlmap$maj == 3),]
@@ -89,7 +89,7 @@ basest <- basest %>%
 ```{r, fig.height = 14, fig.width = 14, fig.retina = 3}
 # Plot map, setting small black borders and fill based on ordered factor variable
 p <- ggplot(atlmap, color = alpha(c("black"),0.5)) 
-p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) + 
+p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) + 
 # Add colors based on divergent color scheme above
  scale_fill_manual(values = mypal) +
   #Crop and add full bleed to borders
@@ -128,7 +128,8 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.2) +
         legend.title = element_text(family = "Futura Medium", color = "black", size = 8)) +
 #Set title of legend  
   labs(fill = "Status of territory as of summer 1940",
-       caption = "Labels show names and locations of U.S. bases acquired from Britain in destroyers-for-bases deal. Map data principally from Natural Earth, selected from various datasets; I used other maps for reference including those of André Ourednik and Michael de Groot, as well as the Rand-McNally map of Africa in 1939 from the David Rumsey Map Collection. Names of bases<br>from _Air Corps News Letter_; locations from Robert J. Cressman, _Official Chronology of the U.S. Navy in World War II._ Divergent color scale from CARTOcolors.",
+       subtitle = "Labels show names and locations of U.S. bases acquired from Britain in destroyers-for-bases deal.",
+       caption = "Map data principally from Natural Earth, selected from various datasets; I used other maps for reference including those of André Ourednik and Michael de Groot, as well as the Rand-McNally map of Africa in 1939 from the David Rumsey Map Collection. Names of bases from _Air Corps News Letter_; locations from<br>Robert J. Cressman, _Official Chronology of the U.S. Navy in World War II._ Divergent color scale from CARTOcolors. Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.",
        title = "Atlantic area, summer 1940")
-ggsave("atlmap40.tiff", bg = "white")
+#ggsave("atlmap40.tiff", bg = "white")
 ```
