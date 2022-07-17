@@ -8,9 +8,9 @@ Monaco,Neutral,2,,0,0
 Bulgaria,Neutral,2,Bulgaria,0,0
 Romania,Neutral,3,Romania,0,-8000
 Vichy France,Vichy,3,Vichy France,0,0
-Greece,Allies,3,Greece,-60000,0
+Greece,Belligerent,3,Greece,-60000,0
 Netherlands,Axis-occupied,2,Netherlands,0,0
-United Kingdom,Allies,4,UK,70000,-15000
+United Kingdom,Allies,4,UK,70000,-80000
 Denmark,Axis-occupied,2,Denmark,0,0
 Sweden,Neutral,2,Sweden,-35000,-50000
 Norway,Axis-occupied,2,Norway,-200000,-600000
@@ -34,7 +34,7 @@ General Government,Axis-occupied,2,General<br>Government,0,0
 Belgium,Axis-occupied,2,Belgium,0,0
 France,Axis-occupied,3,France,0,5000
 Germany,Axis,4,GERMANY,-3000,0
-Austria,Axis,3,Austria,8000,0
+Austria,Axis,2,German<br>Austria,8000,0
 Eupen-Malmedy,Axis,2,,0,0
 Alsace-Lorraine,Axis,2,,0,0
 Sudetenland,Axis,2,,0,0
@@ -51,8 +51,8 @@ Morocco,Vichy,3,Morocco,0,0
 Tunisia,Vichy,2,Tunisia,-30000,0
 Algeria,Vichy,3,Algeria,0,300000
 Libya,Axis,3,Libya,-50000,275000
-Egypt,Allies-occupied,3,Egypt,-60000,200000
-Palestine and Transjordan,Allies-occupied,2,,0,0
+Egypt,Allies,3,Egypt,-60000,200000
+Palestine and Transjordan,Allies,2,,0,0
 Syria,Vichy,2,,0,0
 Saudi Arabia,Allies,3,,0,0
 Greenland,Neutral,3,Greenland,0,0

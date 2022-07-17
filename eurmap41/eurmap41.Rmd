@@ -5,7 +5,7 @@ date: "7/17/2022"
 output: html_document
 ---
 
-Map draws from Natural Earth datasets and also from [Michael de Groot's "Building the New Order"](https://web.archive.org/web/20151010143948/https://web.stanford.edu/group/spatialhistory/cgi-bin/site/pub.php?id=51) as well as the Rand-McNally map of Africa in 1939, [from the David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~247218~5515276:Rand-McNally-Popular-map-Africa?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&qvq=w4s:/what%2FAtlas%2BMap%2Fwhere%2FAfrica%2Fwhen%2F1939;q:africa;sort:Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No;lc:RUMSEY~8~1&mi=0&trs=1#). Information on the targets of the Blitz to the end of 1940 from Basil Collier, _The Defence of the United Kingdom._ Color palette adapted from [CARTOcolors](https://carto.com/carto-colors/). Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.
+Map draws from Natural Earth datasets and also from [Michael de Groot's "Building the New Order"](https://web.archive.org/web/20151010143948/https://web.stanford.edu/group/spatialhistory/cgi-bin/site/pub.php?id=51) as well as the Rand-McNally map of Africa in 1939, [from the David Rumsey Map Collection](https://www.davidrumsey.com/luna/servlet/detail/RUMSEY~8~1~247218~5515276:Rand-McNally-Popular-map-Africa?sort=Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No&qvq=w4s:/what%2FAtlas%2BMap%2Fwhere%2FAfrica%2Fwhen%2F1939;q:africa;sort:Pub_List_No_InitialSort%2CPub_Date%2CPub_List_No%2CSeries_No;lc:RUMSEY~8~1&mi=0&trs=1#). Color palette adapted from [CARTOcolors](https://carto.com/carto-colors/). Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.
 
 ```{r setup, echo = FALSE, message = FALSE, warning = FALSE, results = "hide", fig.height = 14, fig.width = 14, fig.retina = 3}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results = "hide")
@@ -37,6 +37,7 @@ minvars <- c("NAME", "geometry")
 target_crs <- "ESRI:102013"
 #Read borders
 euromap <- st_read("euromap.geojson")
+
 ```
 
 ```{r}
@@ -56,9 +57,10 @@ euromap <- euromap %>%
                                                          "Axis-nonaggressor",
                                                          "Allies",
                                                          "Allies-occupied",
+                                                         "Belligerent",
                                                          ordered = TRUE)))
 #Create divergent palette
-mypal = c("#008080", "#70a494", "#b4c8a8", "#f6edbd", "#a16928", "#ca562c", "#edbb8a")
+mypal = c("#008080", "#70a494", "#b4c8a8", "#f6edbd", "#a16928", "#ca562c", "#edbb8a", "#d46780")
 
 # Generate centroids as reference points for labels; file noms.csv already contains x and y adjustments for labels relative to these centroids
 
@@ -70,9 +72,9 @@ majlab <- euromap[which(euromap$maj == 4),]
 minlab <- euromap[which(euromap$maj == 3),]
 miclab <- euromap[which(euromap$maj == 2),]
 
-blitz <- read_csv(file = "blitz.csv")
-blitz <- st_as_sf(blitz, coords = c("lon", "lat"), crs = 4326, agr = "identity")
-blitz <- st_transform(blitz, crs = target_crs)
+#blitz <- read_csv(file = "blitz.csv")
+#blitz <- st_as_sf(blitz, coords = c("lon", "lat"), crs = 4326, agr = "identity")
+#blitz <- st_transform(blitz, crs = target_crs)
 
 ```
 
@@ -88,7 +90,7 @@ disp_win_coord <- st_coordinates(disp_win_trans)
 p <- ggplot(data = euromap, color = alpha(c("black"),0.5))
 p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) +
   #Add Blitz targets
-  geom_sf(data = blitz, fill = "grey10", color = "black", size = 3, pch = 10) +
+#  geom_sf(data = blitz, fill = "grey10", color = "black", size = 3, pch = 10) +
   #Crop and full bleed to borders
   coord_sf(xlim = disp_win_coord[,'X'], ylim = disp_win_coord[, 'Y'], datum = target_crs, expand = FALSE) +
 # Add colors based on divergent color scheme above
@@ -99,7 +101,7 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) +
   geom_richtext(data = minlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 5, fill = NA, label.color = NA, nudge_x = minlab$nx, nudge_y = minlab$ny, na.rm = TRUE) +
   # Add smallest place labels
   geom_richtext(data = miclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 3, fill = NA, label.color = NA, nudge_x = miclab$nx, nudge_y = miclab$ny, na.rm = TRUE) +
-  guides(fill = guide_legend(ncol = 7)) +
+  guides(fill = guide_legend(ncol = 8)) +
   #Label Atlantic Ocean
     geom_richtext(x = -2000000,
             y = 3300000,
@@ -151,7 +153,7 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) +
             label.color = NA,
             label = "Black Sea") +
   labs(title = "European and North African areas, end of 1940",
-       subtitle = "Showing status, including German and Soviet annexations since 1938; points in the UK show major targets of the Blitz",
-       caption = "Map data from Natural Earth and Michael de Groot, \"Building the New Order: 1938--1945,\" Stanford Spatial History Lab (2010); Blitz data from Basil Collier, _The Defence of the United Kingdom_, appendix XXX. Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.",
+       subtitle = "Showing status, including German and Soviet annexations since 1938",
+       caption = "Map data from Natural Earth and Michael de Groot, \"Building the New Order: 1938--1945,\" Stanford Spatial History Lab (2010). Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.",
        fill = "Status")
 ```
