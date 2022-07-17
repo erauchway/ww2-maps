@@ -71,6 +71,7 @@ euromap <- cbind(euromap, st_coordinates(st_centroid(euromap)))
 majlab <- euromap[which(euromap$maj == 4),]
 minlab <- euromap[which(euromap$maj == 3),]
 miclab <- euromap[which(euromap$maj == 2),]
+misclab <- euromap[which(euromap$maj == 1),]
 
 #blitz <- read_csv(file = "blitz.csv")
 #blitz <- st_as_sf(blitz, coords = c("lon", "lat"), crs = 4326, agr = "identity")
@@ -99,8 +100,11 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) +
   geom_richtext(data = majlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 7, fill = NA, label.color = NA, nudge_x = majlab$nx, nudge_y = majlab$ny, na.rm = TRUE) +
   # Add minor place labels
   geom_richtext(data = minlab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 5, fill = NA, label.color = NA, nudge_x = minlab$nx, nudge_y = minlab$ny, na.rm = TRUE) +
-  # Add smallest place labels
+  # Add smaller place labels
   geom_richtext(data = miclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 3, fill = NA, label.color = NA, nudge_x = miclab$nx, nudge_y = miclab$ny, na.rm = TRUE) +
+  guides(fill = guide_legend(ncol = 8)) +
+  # Add smallest place labels
+  geom_richtext(data = misclab, inherit.aes = FALSE, mapping = aes(X, Y, label = mylabels), family = "Futura Medium", size = 2, fill = NA, label.color = NA, nudge_x = misclab$nx, nudge_y = misclab$ny, na.rm = TRUE) +
   guides(fill = guide_legend(ncol = 8)) +
   #Label Atlantic Ocean
     geom_richtext(x = -2000000,

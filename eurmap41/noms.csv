@@ -15,11 +15,11 @@ Denmark,Axis-occupied,2,Denmark,0,0
 Sweden,Neutral,2,Sweden,-35000,-50000
 Norway,Axis-occupied,2,Norway,-200000,-600000
 Turkey,Neutral,3,Turkey,-60000,0
-Gibraltar,Allies,2,,0,0
+Gibraltar,Allies,1,Gibraltar,75000,0
 Portugal,Neutral,2,Portugal,5000,0
 Ireland,Neutral,2,Ireland,3000,0
 Iceland,Allies-occupied,3,Iceland,3000,0
-Malta,Allies,2,,0,0
+Malta,Allies,1,Malta,0,20000
 Cyprus,Allies,2,,0,0
 San Marino,Neutral,2,,0,0
 Vatican,Neutral,2,,0,0
