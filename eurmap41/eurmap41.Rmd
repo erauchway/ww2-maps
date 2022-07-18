@@ -158,6 +158,6 @@ p + geom_sf(mapping = aes(fill = status_ord), alpha = .6, size = 0.1) +
             label = "Black Sea") +
   labs(title = "European and North African areas, end of 1940",
        subtitle = "Showing status, including German and Soviet annexations since 1938",
-       caption = "Map data from Natural Earth and Michael de Groot, \"Building the New Order: 1938--1945,\" Stanford Spatial History Lab (2010). Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.",
+       caption = "Map by Eric Rauchway with data from Natural Earth and Michael de Groot, \"Building the New Order: 1938--1945,\" Stanford Spatial History Lab (2010). Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.",
        fill = "Status")
 ```

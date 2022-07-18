@@ -26,7 +26,7 @@ Vatican,Neutral,2,,0,0
 Liechtenstein,Neutral,2,,0,0
 Albania,Axis-occupied,2,Albania,0,0
 Finland,Neutral,2,Finland,15000,-70000
-Hungary,Neutral,3,Hungary,-5000,8000
+Hungary,Axis,3,Hungary,-5000,8000
 Yugoslavia,Neutral,3,Yugoslavia,0,0
 Slovakia,Axis,2,Slovakia,-5000,0
 Protectorate of Bohemia and Moravia,Axis-occupied,2,Bohemia &<br>Moravia,-5000,0
@@ -60,3 +60,5 @@ Rio de Oro,Neutral,3,,0,0
 Lebanon,Vichy,2,,0,0
 Channel Islands,Axis-occupied,2,,0,0
 Spanish Morocco,Neutral,2,Spanish<br>Morocco,0,0
+Faroes,Allies-occupied,2,Faroes,0,2500
+Transcarpathia and Northern Transylvania,Axis,1,Transcarpathia &<br>N. Transylvania,800,0

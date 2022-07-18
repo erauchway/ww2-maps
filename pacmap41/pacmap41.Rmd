@@ -103,5 +103,5 @@ p + scale_fill_manual(values = mypal)  +
 #Set title of legend  
   labs(fill = "Status of territory as of summer 1941",
        title = "Pacific area, summer 1941",
-       caption = "Map data principally from Natural Earth, selected from various datasets; I used other maps for reference including those of André Ourednik; for occupied China, I relied on Greg Huff, _World War II and Southeast Asia._ Divergent color scale from CARTOcolors. Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.")
+       caption = "Map by Eric Rauchway using data principally from Natural Earth, selected from various datasets; I used other maps for reference including those of André Ourednik; for occupied China, I relied on Greg Huff, _World War II and Southeast Asia._ Divergent color scale from CARTOcolors. Made using R with ggplot and sf, as well as some use of QGIS. With gratitude especially to Kieran Healy.")
 ```
