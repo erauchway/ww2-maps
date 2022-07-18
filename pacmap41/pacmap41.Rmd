@@ -34,7 +34,6 @@ target_crs = "EPSG:3832"
 # Read basic map data to simple features object
 
 pacmap <- st_read("pacmap41.geojson")
-
 # Read supplementary variables and merge
 
 status <- read_csv("pacnames.csv")
